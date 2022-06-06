@@ -1,0 +1,13 @@
+{% extends 'base1.html' %}
+
+{% block body %}
+<h2>Users List</h2>
+
+<ul>
+{% for user in object_list %}
+<li>{{ user.username }} - {{ user.email }} - {{ user.date_joined }}</li>
+{% empty %}
+<li>No users. <a href="{% url 'alpha' %}">Generate some random users.</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

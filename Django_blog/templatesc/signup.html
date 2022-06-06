@@ -1,0 +1,329 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}SignUp Page Create New User Account{% endblock title %}
+{% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">   {% endcomment %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>     
+{% comment %} <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>   {% endcomment %}
+    {% block styles %}
+            <link rel="stylesheet" type="text/css" href="{% static 'signup.css' %}" >
+    {% endblock %}
+{% block nav %}
+{% comment %} <nav class="navbar navbar-default">
+ 	<h1 class="text-center">
+ 		SignUp
+ 	</h1>
+</nav> {% endcomment %}
+{% endblock %}
+
+
+
+{% block breadcrumb %}
+        {% comment %} <div class="breadcrumb bg-white">
+            <ol class="breadcrumb">
+
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">SignUp /</a></li>
+          </ol>
+        </div> {% endcomment %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% block body  %}
+
+
+
+<div class="signup-page">
+  
+  <div class="page-header header-filter" filter-color="purple" style="background-image: url('https://images.unsplash.com/photo-1508144753681-9986d4df99b3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b3cf0ccc6287057b5a71b0ecdd6cf3f4&auto=format&fit=crop&w=6000&q=80 6000w'); background-size: cover; background-position: top center;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto">
+          <div class="card card-signup">
+            <h2 class="card-title text-center">Register</h2>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-5 ml-auto">
+                  <div class="info info-horizontal">
+                    <div class="icon icon-rose">
+                      <i class="material-icons">timeline</i>
+                    </div>
+                    <div class="description">
+                      <h4 class="info-title">Marketing</h4>
+                      <p class="description">
+                        We've created the marketing campaign of the website. It was a very interesting collaboration.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="info info-horizontal">
+                    <div class="icon icon-primary">
+                      <i class="material-icons">code</i>
+                    </div>
+                    <div class="description">
+                      <h4 class="info-title">Fully Coded in HTML5</h4>
+                      <p class="description">
+                        We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="info info-horizontal">
+                    <div class="icon icon-info">
+                      <i class="material-icons">group</i>
+                    </div>
+                    <div class="description">
+                      <h4 class="info-title">Built Audience</h4>
+                      <p class="description">
+                        There is also a Fully Customizable CMS Admin Dashboard for this product.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-5 mr-auto">
+                  <div class="social text-center">
+                    <button class="btn btn-just-icon btn-round btn-twitter">
+                      <i class="fa fa-twitter"></i>
+                    </button>
+                    <button class="btn btn-just-icon btn-round btn-dribbble">
+                      <i class="fa fa-dribbble"></i>
+                    </button>
+                    <button class="btn btn-just-icon btn-round btn-facebook">
+                      <i class="fa fa-facebook"> </i>
+                    </button>
+                    <h4> or be classical </h4>
+                  </div>
+
+                  <form class="form" method="post" action="" id="needs-validation" novalidate>{% csrf_token %}
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                        </div>
+                        <input type="text" id="firstname" name="firstname" type="lastname"  placeholder="First Name" class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off'/>
+                           <div class="invalid-feedback">  
+                               Please enter first name.  
+                            </div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                        </div>
+                            <input class="form-control" id="lastname" name="lastname" type="lastname"placeholder="Last Name" aria-describedby="inputGroupPrepend" required autocomplete='off'/>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">settings_cell</i>
+                          </span>
+                        </div>
+                <input type="number" id="contact" name='contact' type="contact"  placeholder="Mobile No." class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off'/>
+             <div class="invalid-feedback">  
+                  Please enter Phone No.  
+              </div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">mail</i>
+                          </span>
+                        </div>
+                    <input type="email" name='email' id="email" type="email"  placeholder="Email" class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off'/>
+             <div class="invalid-feedback">  
+                    Please enter Email.  
+                  </div> 
+                      </div>
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">lock_outline</i>
+                          </span>
+                        </div>
+                 <input type="password" name='password' id="password" type="password"  placeholder="Password" class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off'/>
+             <div class="invalid-feedback">  
+                    Please enter Password.  
+                  </div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">lock_open</i>
+                          </span>
+                        </div>
+                <input type="password" name='repassword' id="repassword" type="password"  placeholder="Password" class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off'/>
+             <div class="invalid-feedback">  
+                    Please enter Password.  
+                  </div>
+                      </div>
+                    </div>
+
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="" checked="">
+                        <span class="form-check-sign">
+                          <span class="check"></span>
+                        </span>
+                        I agree to the <a href="#something">terms and conditions</a>.
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <span class="form-check-sign">
+                          <span class="check">
+                            <i class="material-icons">input</i>
+                          </span>
+                        </span>
+                        Already have account? <a href="{% url 'blog:login' %}">Login</a>.
+                      </label>
+                    </div>
+                    <div class="text-center">
+                     <button class="btn btn-primary btn-round" name='submit' type="submit">Submit</button>
+                      {% comment %} <a type='submit' name="submit" class="btn btn-primary btn-round">Get Started</a> {% endcomment %}
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer text-center ">
+      <p>Made with <a href="#" target="_blank"> CIS </a> by Creative Akshay</p>
+    </footer>
+  </div>
+  </div>
+
+
+
+
+
+<script>
+        (function () {  
+            'use strict';  
+            window.addEventListener('load', function () {  
+                var form = document.getElementById('needs-validation');  
+                form.addEventListener('submit', function (event) {  
+                    if (form.checkValidity() === false) {  
+                        event.preventDefault();  
+                        event.stopPropagation();  
+                    }  
+                    form.classList.add('was-validated');  
+                }, false);  
+            }, false);  
+        })(); 
+
+{% comment %} $(document).on('click', '.navbar-toggler', function() {
+  $toggle = $(this);
+  $navbar = $('.navbar[color-on-scroll]');
+  scroll_distance = $navbar.attr('color-on-scroll') || 500;
+
+  if (materialKit.misc.navbar_menu_visible == 1) {
+    $('body').removeClass('nav-open');
+    materialKit.misc.navbar_menu_visible = 0;
+    $('#bodyClick').remove();
+    setTimeout(function() {
+      $toggle.removeClass('toggled');
+    }, 550);
+
+    $('body').removeClass('nav-open-absolute');
+  } else {
+    setTimeout(function() {
+      $toggle.addClass('toggled');
+    }, 580);
+
+
+    div = '<div id="bodyClick"></div>';
+    $(div).appendTo("body").click(function() {
+      $('body').removeClass('nav-open');
+
+      if ($('nav').hasClass('navbar-absolute')) {
+        $('body').removeClass('nav-open-absolute');
+      }
+      materialKit.misc.navbar_menu_visible = 0;
+      $('#bodyClick').remove();
+      setTimeout(function() {
+        $toggle.removeClass('toggled');
+      }, 550);
+    });
+
+    if ($('nav').hasClass('navbar-absolute')) {
+      $('html').addClass('nav-open-absolute');
+    }
+
+    $('body').addClass('nav-open');
+    materialKit.misc.navbar_menu_visible = 1;
+  }
+
+  if ($('.navbar-color-on-scroll').length != 0) {
+    $(window).on('scroll', materialKit.checkScrollForTransparentNavbar)
+  }
+});
+
+materialKit = {
+  misc: {
+    navbar_menu_visible: 0,
+    window_width: 0,
+    transparent: true,
+    fixedTop: false,
+    navbar_initialized: false,
+    isWindow: document.documentMode || /Edge/.test(navigator.userAgent)
+  },
+
+  checkScrollForTransparentNavbar: debounce(function() {
+    if ($(document).scrollTop() > scroll_distance) {
+      if (materialKit.misc.transparent) {
+        materialKit.misc.transparent = false;
+        $('.navbar-color-on-scroll').removeClass('navbar-transparent');
+      }
+    } else {
+      if (!materialKit.misc.transparent) {
+        materialKit.misc.transparent = true;
+        $('.navbar-color-on-scroll').addClass('navbar-transparent');
+      }
+    }
+  }, 17)
+};
+
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this,
+      args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    }, wait);
+    if (immediate && !timeout) func.apply(context, args);
+  };
+}; {% endcomment %}
+
+
+</script>
+{% endblock %}

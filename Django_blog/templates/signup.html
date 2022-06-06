@@ -1,0 +1,235 @@
+{% extends 'base1.html' %} {% load static %} {% block title %}SignUp Page Create New User Account{% endblock title %} {% comment %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> {% endcomment %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{% comment %}
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> {% endcomment %} {% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'signup.css' %}"> {% endblock %} {% block nav %} {% comment %}
+<nav class="navbar navbar-default">
+    <h1 class="text-center">
+        SignUp
+    </h1>
+</nav> {% endcomment %} {% endblock %} {% block breadcrumb %} {% comment %}
+<div class="breadcrumb bg-white">
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">SignUp /</a></li>
+    </ol>
+</div> {% endcomment %} {% endblock %} {% block body %}
+
+
+
+<div class="signup-page" style="margin-top:-20px;">
+
+    <div class="page-header header-filter" filter-color="purple" style="background-image: url('https://images.unsplash.com/photo-1508144753681-9986d4df99b3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b3cf0ccc6287057b5a71b0ecdd6cf3f4&auto=format&fit=crop&w=6000&q=80 6000w'); background-size: cover; background-position: top center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 ml-auto mr-auto">
+                    <div class="card card-signup">
+                        {% for message in messages %}
+                        <div id="my" {% if message.tags %} class="alert {% if message.tags != " error " %} alert-{{ message.tags }} {% else %} alert-danger {% endif %}{% endif %} alert-dismissible fade show msg5 text-center" role="alert" style="margin-top:65px; margin-bottom:0px;">
+                            <strong>Message: </strong> {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+                        </div>
+                        {% endfor %}
+                        <div id='signup_msg' class='content text-center' ></div>
+                        <h2 class="card-title text-center">Register</h2>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-5 ml-auto">
+                                    <div class="info info-horizontal">
+                                        <div class="icon icon-rose">
+                                            <i class="material-icons">timeline</i>
+                                        </div>
+                                        <div class="description">
+                                            <h4 class="info-title">Marketing</h4>
+                                            <p class="description">
+                                                We've created the marketing campaign of the website. It was a very interesting collaboration.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="info info-horizontal">
+                                        <div class="icon icon-primary">
+                                            <i class="material-icons">code</i>
+                                        </div>
+                                        <div class="description">
+                                            <h4 class="info-title">Fully Coded in HTML5</h4>
+                                            <p class="description">
+                                                We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="info info-horizontal">
+                                        <div class="icon icon-info">
+                                            <i class="material-icons">group</i>
+                                        </div>
+                                        <div class="description">
+                                            <h4 class="info-title">Built Audience</h4>
+                                            <p class="description">
+                                                There is also a Fully Customizable CMS Admin Dashboard for this product.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5 mr-auto">
+                                    <div class="social text-center">
+                                        <button class="btn btn-just-icon btn-round btn-twitter">
+                      <i class="fa fa-twitter"></i>
+                    </button>
+                                        <button class="btn btn-just-icon btn-round btn-dribbble">
+                      <i class="fa fa-dribbble"></i>
+                    </button>
+                                        <button class="btn btn-just-icon btn-round btn-facebook">
+                      <i class="fa fa-facebook"> </i>
+                    </button>
+                                        <h4> or be classical </h4>
+                                    </div>
+
+                                    <form class="form" method="post" action="" id="needs-validation" novalidate>{% csrf_token %}
+                                        <div class="form-group bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                                                </div>
+                                                <input type="text" id="firstname" name="person.fname" type="lastname" placeholder="First Name" class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off' />
+                                                <div class="invalid-feedback">
+                                                    Please enter first name.
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                        <i class="material-icons">face</i>
+                      </span>
+                                                </div>
+                                                <input class="form-control" id="lastname" name="person.lname" type="lastname" placeholder="Last Name" aria-describedby="inputGroupPrepend" required autocomplete='off' />
+                                            </div>
+                                        </div>
+                                        <div class="form-group bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                            <i class="material-icons">settings_cell</i>
+                          </span>
+                                                </div>
+                                                <input type="number" id="contact" name='person.contact' type="contact" placeholder="Mobile No." class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off' />
+                                                <div class="invalid-feedback">
+                                                    Please enter Phone No.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                            <i class="material-icons">mail</i>
+                          </span>
+                                                </div>
+                                                <input type="email" name='email' id="email" type="email" placeholder="Email" class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off' />
+                                                <div class="invalid-feedback">
+                                                    Please enter Email.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                            <i class="material-icons">home</i>
+                          </span>
+                                                </div>
+                                                <input class="form-control" id="city" name="person.city" type="text" placeholder="City" aria-describedby="inputGroupPrepend" required autocomplete='off' />
+                                            </div>
+                                        </div>
+                                        <div class="form-group bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                          <i class="material-icons">place</i>
+                        </span>
+                                                </div>
+                                                <input class="form-control" id="state" name="person.state" type="lastname" placeholder="State" aria-describedby="inputGroupPrepend" required autocomplete='off' />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                            <i class="material-icons">lock_outline</i>
+                          </span>
+                                                </div>
+                                                <input type="password" name='password' id="password3" type="password" placeholder="Password" class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off' />
+                                                <div class="invalid-feedback">
+                                                    Please enter Password.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                            <i class="material-icons">lock_open</i>
+                          </span>
+                                                </div>
+                                                <input type="password" id="repassword" type="password" placeholder="Password" class="form-control" aria-describedby="inputGroupPrepend" required autocomplete='off' />
+                                                <div class="invalid-feedback">
+                                                    Please enter Password.
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="" checked="">
+                        <span class="form-check-sign">
+                          <span class="check"></span>
+                        </span>
+                        I agree to the <a href="#something">terms and conditions</a>.
+                      </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                        <span class="form-check-sign">
+                          <span class="check">
+                            <i class="material-icons">input</i>
+                          </span>
+                        </span>
+                        Already have account? <a href="{% url 'newacc:signin' %}">Login</a>.
+                      </label>
+                                        </div>
+                                        <div class="text-center">
+                                            <button class="btn btn-primary btn-round" id="submit" type="submit">Submit</button> {% comment %} <a type='submit' name="submit" class="btn btn-primary btn-round">Get Started</a> {% endcomment %}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer text-center ">
+            <p>Made with <a href="#" target="_blank"> CIS </a> by Creative Akshay</p>
+        </footer>
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="{% static 'signup.js' %}"></script>
+
+{% endblock %}

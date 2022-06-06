@@ -1,0 +1,108 @@
+{% extends "base1.html" %} 
+{% block styles %}
+<style>
+    .btn1 {
+        color: #fff !important;
+        background-color: #7c32ff !important;
+        border-color: #7c32ff !important;
+        border-radius: 1.25rem !important;
+    }
+
+</style>
+{% endblock %}
+
+
+{% block body %} {% comment %}
+<div class="breadcrumb">
+    <ol class="breadcrumb_1">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li aria-current="#" class="breadcrumb-item active">WrBlog </li>
+    </ol>
+{% comment %} </div>  {% for message in messages %}
+<div id="my" {% if message.tags %} class="alert {% if message.tags != " error " %} alert-{{ message.tags }} {% else %} alert-danger {% endif %}{% endif %} alert-dismissible fade show msg5 text-center" role="alert" style="margin-top:65px; margin-bottom:0px;">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %} {% endcomment %}
+<div id='msgs' class="text-center container"></div>
+
+
+
+<div class="container text-center py-5 my-5 border-bottom border-primary">
+    <h1>Write Blog</h1>
+</div>
+
+<div class="container py-5 my-5 px-5">
+    <form method="POST" id="formid" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="name">Title Name:</label>
+            <input class="form-control" id="title" name="title" type="text" value="{{title1}}" required>
+            <p id='danger' ></p>
+            <span class=
+        </div>
+        <div class="form-group">
+            <label for="allContent">Content:</label>
+            <textarea id="Content" name="Content" type="allContent" class="form-control" rows="10" required>{{Content1}}</textarea>
+            <p id='dangercontent' ></p>
+        </div>
+        <div class='form-group'>
+            <label for="tages">Simple tags input:</label>
+            <input id="form-tags-1" name="tages" type="text">
+        </div>
+        <div class="form-group">
+            <label for="image">Upload cover photo:</label> {% comment %} {% progress_bar %} {% endcomment %}
+            <input type="file" id="photos" name="photos" />
+        </div>
+        <div class="form-group">
+            <label for="videofile">Upload cover video (optional):</label> {% comment %} {% progress_bar %} {% endcomment %}
+            <input type="file" id="videofile" name="videofile" onchange="ValidateSize(this)" />
+            <input type="hidden" id="uname" name="uname" value="{{request.session.person_id}}" />
+
+        </div>
+        <button class="btn btn1 float-right" id='post' type="submit">Post</button>
+    </form>
+</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+$(document).focusout(function() {
+    //var defaultVal = $('#title').val();
+    $("#title").focusout(function() {
+
+        if ($(this).val() == '') {
+
+            $("#title").css('border', 'solid 1px red');
+            $("#danger").html(`<small class='alert-danger fade show text-center' role='alert' style='margin-bottom:0px;'>ERROR:Title is Required!!!!`);
+         } else {
+
+            // If it is not blank. 
+            $("#title").css('border', 'solid 1px green');
+            $('#danger').remove();
+        }
+    }).trigger("focusout");
+});
+
+$("textarea").focusout(function() {
+    $("textarea").focusout(function() {
+        if ($(this).val() == '') {
+
+            $("#Content").css('border', 'solid 1px red');
+            $("#dangercontent").html(`<small class='alert-danger fade show text-center' role='alert' style='margin-bottom:0px;'>ERROR:Content is Required!!!!`);
+        } else {
+
+             // If it is not blank. 
+             $("#Content").css('border', 'solid 1px green');
+             $('#dangercontent').remove();
+         }
+     }).trigger("focusout");
+ });
+
+</script>
+
+{% endblock %}

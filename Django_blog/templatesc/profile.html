@@ -1,0 +1,698 @@
+{% extends 'base1.html' %} {% load static %} {% block title %}Blogs Page {% endblock title %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> {% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'blog_detail.css' %}"> 
+<style>
+    .remove {
+        display: none;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        border-radius: 10em ;
+        padding: 2px 6px 3px;
+        text-decoration: none;
+        font: 700 21px/20px sans-serif ;
+        background: #555 ;
+        border: 3px solid #fff;
+        color: #FFF ;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        -webkit-transition: background 0.5s;
+        transition: background 0.5s;
+    }
+
+    .remove:hover {
+        background: #E54E4E;
+        padding: 3px 7px 5px;
+        top: -11px;
+        right: -11px;
+    }
+
+    .remove:active {
+        background: #E54E4E;
+        top: -10px;
+        right: -11px;
+    }
+    .upload {
+        display: none;
+        position: absolute;
+        top: 296px;
+        right: 32px;
+        border-radius: 10em ;
+        padding: 7px 9px 6px;
+        text-decoration: none;
+        font: 700 21px/20px sans-serif ;
+        background: #fff ;
+        border: 2px solid #fff;
+        color: #fe7a7f ;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        -webkit-transition: background 0.5s;
+        transition: background 0.5s;
+    }
+
+    .upload:hover {
+        background: #6610f2;
+        padding: 7px 9px 6px;
+        top: 296px;
+        right: 32px;
+    }
+
+    .upload:active {
+        background: #6610f2;
+        top: 296px;
+        right: 32px;
+    }
+    .bio   { color: #828bb2;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    }
+    .jq-tab-content ul li{
+        color:#fff;
+        padding:15px;
+    }
+    .jq-tab-wrapper button{
+        color: #fff;
+        background-color: #7c32ff;
+        border-radius: 50%;
+
+    }
+    .btn1{
+        color:#fff !important;
+        background-color: #7c32ff !important;
+        border-color: #7c32ff !important;
+        border-radius: 1.25rem !important;
+    }
+    .btn2{
+        color:#fff !important;
+        background-color: #fd7e14 !important;
+        border-color: #fd7e14 !important;
+        border-radius: 1.25rem !important;
+    }
+</style>
+{% endblock %}
+
+ {% block body %}
+
+<div class="main-body section-gap">
+    <div class="container box_1170">
+        <div class="row">
+            <div class="col-lg-8 post-list">
+
+                <section class="post-area">
+                    <div class="row">
+                    {% for b in page_obj %}
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-post-item">
+                            
+                                <div class="post-thumb">
+                                    <img  src="../media/{{b.photos}}" alt="" width="751px" height="401px" >
+                                    <button class="remove" style="display: inline;"  data-toggle="modal" data-target="#RemoveModal{{b.id}}">&#215;</butthon>
+                                </div>
+                                <div class="post-details">
+                                <button class="btn float-right" data-toggle="modal" data-target="#ModalCenter{{b.id}}"> <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+                                <h4><a class="d-block" href="{% url 'blog:blog_detail' b.slug %}">{{b.title}} </a> </h4>
+                             
+                                    <p>{{b.Content|truncatechars:100 }}</p>
+                                    <div class="blog-meta">
+                                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>{{b.timeStamp}}</a>
+                                        <a href="#" class="m-gap"><span class="lnr lnr-bubble"></span>05</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <!--Modal for delete -->
+                                    <div class="modal fade" id="RemoveModal{{b.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Delete "{{b.title}}"</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <div class="form-floating mb-3">
+                                    <h2>Are You Sure, You want to delete this blog?</h2>
+                                     <form action="../delete_blog/" method='post'>{% csrf_token %}
+                                     <input type='hidden' value="{{b.id}}" name="blog_id" id="blog_id"/>
+                                     <button class= "btn btn-danger float-right" type="submit"> Delete </button>
+                                      </form>
+                                    </div>
+                                    </div>
+                                    </div>
+                            </div>
+                            </div>
+                        <!--modal for edit-->
+                            <div class="modal fade" id="ModalCenter{{b.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="top:32px;">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action='../editblog/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="name">Title Name:</label>
+                                            <input class="form-control" id="name" name="name" type="text" value="{{b.title}}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="allContent">Content:</label>
+                                            <textarea id="allContent" name="allContent" type="allContent" class="form-control" rows="10" id="comment" required>{{b.Content}}</textarea>
+                                        </div>
+                                        <div>
+                                            <b-form-group label="Small:" label-for="file-small" label-cols-sm="2" value="media/{{b.photos}}" label-size="sm">
+                                            <b-form-file id="file-small" size="sm"></b-form-file>
+                                        </div>
+                                        <div class="form-group custom-file">    
+                                            {% comment %} {% if post.photos %}
+                                                <label for="image" class="my-2">( {{post.photos|safe| truncatechars:50 }} )</label>
+                                            {% else %} {% endcomment %}
+                                                <label for="image" class="my-2">Upload Cover Image( optional )</label>
+                                            {% comment %} {% endif %}  {% endcomment %}
+                                                <input type="file" class="form-control-file" id="image" name='image'>
+                                        </div>
+                                        {% comment %} <div class="form-group custom-file my-3 ">
+                                            {% comment %} {% if post.video %}
+                                                <label for="videofile" class="my-2">( {{post.video|safe| truncatechars:50 }} )</label>
+                                            {% else %} {% endcomment %}
+                                                {% comment %} <label for="videofile" class="my-2">Upload Video( optional )</label> {% endcomment %}
+                                            {% comment %} {% endif %} 
+                                                <input type="file" class="form-control-file" id="videofile" name='videofile'>
+                                        </div> {% endcomment %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn2" data-dismiss="modal">Close</button>
+                                        <input type='hidden' value="{{b.slug}}" name='userslug' />
+                                        <input type='hidden' value="{{b.id}}" name='postid' />
+                                        <button type="submit" class="btn btn1">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                
+            
+
+
+
+                        {% endfor %}
+                    {% comment %} <div class="col-lg-6 col-md-6">
+                            <div class="single-post-item">
+                                <div class="post-thumb">
+                                    <img class="img-fluid" src="../media/c2.webp" alt="">
+                                </div>
+                                <div class="post-details">
+                                    <h4><a href="#">An Stormy Evening</a></h4>
+                                    <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think about setting up your own viewing station.</p>
+                                    <div class="blog-meta">
+                                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>March 14, 2018</a>
+                                        <a href="#" class="m-gap"><span class="lnr lnr-bubble"></span>05</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-post-item">
+                                <div class="post-thumb">
+                                    <img class="img-fluid" src="../media/c3.webp" alt="">
+                                </div>
+                                <div class="post-details">
+                                    <h4><a href="#">An Stormy Evening</a></h4>
+                                    <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think about setting up your own viewing station.</p>
+                                    <div class="blog-meta">
+                                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>March 14, 2018</a>
+                                        <a href="#" class="m-gap"><span class="lnr lnr-bubble"></span>05</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-post-item">
+                                <div class="post-thumb">
+                                    <img class="img-fluid" src="../media/c4.webp" alt="">
+                                </div>
+                                <div class="post-details">
+                                    <h4><a href="#">An Stormy Evening</a></h4>
+                                    <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think about setting up your own viewing station.</p>
+                                    <div class="blog-meta">
+                                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>March 14, 2018</a>
+                                        <a href="#" class="m-gap"><span class="lnr lnr-bubble"></span>05</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-post-item">
+                                <div class="post-thumb">
+                                    <img class="img-fluid" src="../media/c1.webp" alt="">
+                                </div>
+                                <div class="post-details">
+                                    <h4><a href="#">An Stormy Evening</a></h4>
+                                    <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think about setting up your own viewing station.</p>
+                                    <div class="blog-meta">
+                                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>March 14, 2018</a>
+                                        <a href="#" class="m-gap"><span class="lnr lnr-bubble"></span>05</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-post-item">
+                                <div class="post-thumb">
+                                    <img class="img-fluid" src="../media/c2.webp" alt="">
+                                </div>
+                                <div class="post-details">
+                                    <h4><a href="#">An Stormy Evening</a></h4>
+                                    <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think about setting up your own viewing station.</p>
+                                    <div class="blog-meta">
+                                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>March 14, 2018</a>
+                                        <a href="#" class="m-gap"><span class="lnr lnr-bubble"></span>05</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-post-item">
+                                <div class="post-thumb">
+                                    <img class="img-fluid" src="../media/c3.webp" alt="">
+                                </div>
+                                <div class="post-details">
+                                    <h4><a href="#">An Stormy Evening</a></h4>
+                                    <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think about setting up your own viewing station.</p>
+                                    <div class="blog-meta">
+                                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>March 14, 2018</a>
+                                        <a href="#" class="m-gap"><span class="lnr lnr-bubble"></span>05</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-post-item">
+                                <div class="post-thumb">
+                                    <img class="img-fluid" src="../media/c4.webp" alt="">
+                                </div>
+                                <div class="post-details">
+                                    <h4><a href="#">An Stormy Evening</a></h4>
+                                    <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think about setting up your own viewing station.</p>
+                                    <div class="blog-meta">
+                                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>March 14, 2018</a>
+                                        <a href="#" class="m-gap"><span class="lnr lnr-bubble"></span>05</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    {% endcomment %}
+                        <div class="col-lg-12">
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                                            <span aria-hidden="true">
+                                                <span class="fa fa-arrow-left"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+
+                                    <li class="page-item active"><a href="#" class="page-link"> {{ page_obj.number }}</a></li>
+                                    {% comment %} <li class="page-item "><a href="#" class="page-link">02</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">03</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">04</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">09</a></li> {% endcomment %}
+                                    {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">
+                                                <span class="fa fa-arrow-right"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </section>
+                {% comment %} <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div> {% endcomment %}
+            </div>
+            <div class="col-lg-4 sidebar">
+                <div class="single-widget protfolio-widget">
+                    <img class="img-fluid" src="../media/{{person.photo}}" alt="" style="min-width: 298px; min-height: 290px;">
+                    <a class="upload" href="#" style="display: inline;"  data-toggle="modal" data-target="#imgModal"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                    <a href="#">
+                        <h4>{{person.fname}} {{person.lname}}</h4>
+                    </a>
+                        <h5 style="color:#fff">{{person.aboutperson}}</h5>
+                    <p class="p-text bio">
+                        {{person.aboutprofile}}
+                    </p>
+                    <ul class="social-links">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                    </ul>
+                    <img src="img/sign.png" alt="">
+                </div>
+                <div class="single-widget popular-posts-widget">
+                    <div class="jq-tab-wrapper horizontal-tab" id="horizontalTab">
+                    <button class="btn float-right" data-toggle="modal" data-target="#Profile"> <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+                        <div class="jq-tab-menu">
+                            <div class="jq-tab-title" data-tab="1" style="color:#fff;">Profile</div>
+                        </div>
+                        <div class="jq-tab-content-wrapper">
+                            <div class="jq-tab-content active" data-tab="1">
+                                <ul>
+                                <li><span>Date Of Birth:</span>   12 dec 1996</li>
+                                <li><span>Email:</span>   {{person.email}}</li>
+                                <li><span>Address:</span>   83, Kishan Ganj, Bhawarkhua,</li>
+                                <li><span>Contact:</span>   {{person.contact}}</li>
+                                <li><span>City:</span>   {{person.city}}</li>
+                                <li><span>State:</span>  {{person.state}}</li>
+                                </ul>
+                {% comment %} <div class="single-popular-post d-flex flex-row">
+                                    <div class="popular-thumb">
+                                        <img class="img-fluid" src="img/posts/carousel/stories1.jpg" alt="">
+                                    </div>
+                                    <div class="popular-details">
+                                        <h6><a href="">2nd Gen Smoke Alarm <br>
+                                            get up from sleep</a></h6>
+                                        <p>September 14, 2018</p>
+                                    </div>
+                                </div>
+                                <div class="single-popular-post d-flex flex-row">
+                                    <div class="popular-thumb">
+                                        <img class="img-fluid" src="img/posts/carousel/stories2.jpg" alt="">
+                                    </div>
+                                    <div class="popular-details">
+                                        <h6><a href="">2nd Gen Smoke Alarm <br>
+                                                    get up from sleep</a></h6>
+                                        <p>September 14, 2018</p>
+                                    </div>
+                                </div>
+                                <div class="single-popular-post d-flex flex-row">
+                                    <div class="popular-thumb">
+                                        <img class="img-fluid" src="img/posts/carousel/stories3.jpg" alt="">
+                                    </div>
+                                    <div class="popular-details">
+                                        <h6><a href="">2nd Gen Smoke Alarm <br>
+                                        get up from sleep</a></h6>
+                                        <p>September 14, 2018</p>
+                                    </div>
+                                </div>
+                                <div class="single-popular-post d-flex flex-row">
+                                    <div class="popular-thumb">
+                                        <img class="img-fluid" src="img/posts/carousel/stories4.jpg" alt="">
+                                    </div>
+                                    <div class="popular-details">
+                                        <h6><a href="">2nd Gen Smoke Alarm <br>
+                                                get up from sleep</a></h6>
+                                        <p>September 14, 2018</p>
+                                    </div>
+                                </div> {% endcomment %}
+                            </div>
+                            {% comment %} <div class="jq-tab-content active" data-tab="2">
+                                <div class="single-popular-post d-flex flex-row">
+                                    <div class="popular-thumb">
+                                        <img class="img-fluid" src="img/posts/carousel/stories2.jpg" alt="">
+                                    </div>
+                                    <div class="popular-details">
+                                        <h6><a href="">2nd Gen Smoke Alarm <br>
+                                        get up from sleep</a></h6>
+                                        <p>September 14, 2018</p>
+                                    </div>
+                                </div>
+                                <div class="single-popular-post d-flex flex-row">
+                                    <div class="popular-thumb">
+                                        <img class="img-fluid" src="img/posts/carousel/stories3.jpg" alt="">
+                                    </div>
+                                    <div class="popular-details">
+                                        <h6><a href="">2nd Gen Smoke Alarm <br>
+                                            get up from sleep</a></h6>
+                                        <p>September 14, 2018</p>
+                                    </div>
+                                </div>
+                                <div class="single-popular-post d-flex flex-row">
+                                    <div class="popular-thumb">
+                                        <img class="img-fluid" src="img/posts/carousel/stories1.jpg" alt="">
+                                    </div>
+                                    <div class="popular-details">
+                                        <h6><a href="">2nd Gen Smoke Alarm <br>
+                                    get up from sleep</a></h6>
+                                        <p>September 14, 2018</p>
+                                    </div>
+                                </div>
+                                <div class="single-popular-post d-flex flex-row">
+                                    <div class="popular-thumb">
+                                        <img class="img-fluid" src="img/posts/carousel/stories4.jpg" alt="">
+                                    </div>
+                                    <div class="popular-details">
+                                        <h6><a href="">2nd Gen Smoke Alarm <br>
+                                    get up from sleep</a></h6>
+                                        <p>September 14, 2018</p>
+                                    </div>
+                                </div>
+                            </div>
+                {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+                       <!--modal for Profile-->
+                            <div class="modal fade" id="Profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="top:32px;">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action='../editprofile/'>
+                                    {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="name">First name:</label>
+                                            <input class="form-control" id="fname" name="fname" type="text" value="{{person.fname}}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Last name:</label>
+                                            <input class="form-control" id="lname" name="lname" type="text" value="{{person.lname}}" required>
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="name">Contact :</label>
+                                            <input class="form-control" id="contact" name="contact" type="text" value="{{person.contact}}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Profile:</label>
+                                            <input class="form-control" id="profile" name="profile" type="text" value="{{person.aboutperson}}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Email:</label>
+                                            <input class="form-control" id="email" name="email" type="email" value="{{person.email}}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="allContent">Bio:</label>
+                                            <textarea id="bio" name="bio" type="allContent" class="form-control" rows="5"  required>{{person.aboutprofile}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn2" data-dismiss="modal">Close</button>
+                                        <input type='hidden' value="{{b.id}}" name='postid' />
+                                        <button type="submit" class="btn btn1">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <!--end Profile -->
+                <div class="single-widget category-widget">
+                    <h4 class="title">Post Categories</h4>
+                    <ul>
+                        <li>
+                            <a href="#" class="justify-content-between align-items-center d-flex">
+                                <p><img src="img/bullet.png" alt="">International (56)</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="justify-content-between align-items-center d-flex">
+                                <p><img src="img/bullet.png" alt="">Tours and Travels (45)</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="justify-content-between align-items-center d-flex">
+                                <p><img src="img/bullet.png" alt="">Cooking Tips (23)</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="justify-content-between align-items-center d-flex">
+                                <p><img src="img/bullet.png" alt="">Life Style and Fashion (72)</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="justify-content-between align-items-center d-flex">
+                                <p><img src="img/bullet.png" alt="">Organic News (37)</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="justify-content-between align-items-center d-flex">
+                                <p><img src="img/bullet.png" alt="">Games and Sports (19)</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="single-widget tags-widget">
+                    <h4 class="title">Post Tags</h4>
+                    <ul>
+                        <li><a href="#">Lifestyle</a></li>
+                        <li><a href="#">Art</a></li>
+                        <li><a href="#">Adventure</a></li>
+                        <li><a href="#">Food</a></li>
+                        <li><a href="#">Techlology</a></li>
+                        <li><a href="#">Fashion</a></li>
+                        <li><a href="#">Architecture</a></li>
+                        <li><a href="#">Food</a></li>
+                        <li><a href="#">Technology</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--ImageModal-->
+ <div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="orderModal" aria-hidden="true" style="top:150px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imgModalTitle">Track Your Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <form action="../Image" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    {% csrf_token %}
+
+                        <div class="form-group">
+                          <label for="Img">Upload profile photo:</label>
+                          <input type="hidden" id="id" name="id" value="{{person.id}}" />
+                          <input type="file" id="Img" name="Img" />
+                         </div>
+                  
+                     <button type="submit" class="btn btn-primary"  data-toggle="modal" data-target="#imgModal">Update</button>
+                </form>
+             </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<!--end Imgmodal-->
+   <!--ModalsLOGIN-->
+   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalTitle">Update your Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/editprofile" method="post">{% csrf_token %}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="firstname">Name:</label>
+                        <input class="form-control" id="firstname" name="firstname" type="firstname" value='{{pro.fname}}'>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">First Name:</label>
+                        <input class="form-control" id="lastname" name="lastname" type="lastname" value='{{pro.lname}}'>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">contact:</label>
+                        <p><small>A Number must contain only 10 digit:</small></p>
+                        <input class="form-control" id="contact" name="contact" type="number" pattern="[0-9]{10}" value='{{pro.contact}}'>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <p><small>Email can be @gmail, @outlook and @hotmail :</small></p>
+                        <input class="form-control" id="email" name="email" type="email"
+                            pattern=".+@hotmail\.com|.+@outlook\.com|.+@gmail\.com" value='{{pro.email}}'>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input class="form-control" id="state" name="state" type="state" value='{{pro.state}}'>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input class="form-control" id="city" name="city" type="city" value='{{pro.city}}'>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <p><small>A password must contain 8 or more characters (least one number, and one uppercase and
+                                lowercase letter):</small></p>
+                        <input class="form-control" id="password" name="password" type="password"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_pass">Re Enter Password:</label>
+                        <input class="form-control" id="confirm_pass" name="confirm_pass" type="password"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox"> Remember me</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Upload profile photo:</label>
+                        <input type="file" id="image" name="image" />
+                    </div>
+
+                    <button type="submit" class="btn btn-info">Update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+    <script>
+    <script src="{% static 'tabs.js' %}"></script>
+<script>
+!function(a){"use strict";a.fn.jqTabs=function(t){var s=a.extend({direction:"vertical",duration:400,mainWrapperClass:"jq-tab-wrapper",tabClass:"jq-tab-title",tabContentClass:"jq-tab-content",tabClicked:a.noop,tabContentLoaded:a.noop},t);return this.each(function(){var t=a(this);t.hasClass(s.mainWrapperClass)||t.addClass(s.mainWrapperClass),"horizontal"===s.direction&&t.addClass("horizontal-tab"),t.find("."+s.tabClass).click(function(n){n.preventDefault(),s.tabClicked.call();var e=a(this);if(!e.hasClass("active")){t.find("."+s.tabClass).removeClass("active");var i=e.data("tab");e.addClass("active"),t.find("."+s.tabContentClass).removeClass("active").css("display","none"),t.find("."+s.tabContentClass+'[data-tab="'+i+'"]').fadeIn(s.duration,function(){s.tabContentLoaded.call(),a(this).addClass("active")})}})})}}(jQuery);
+</script>
+{% endblock %}

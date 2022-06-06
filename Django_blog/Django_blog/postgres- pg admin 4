@@ -1,0 +1,10 @@
+postgres- pg admin 4
+stored procedures in postgres
+ 
+
+to create admin in postgres 
+1. sudo -u postgres createuser -s -i -d -r -l -w "root"
+2. sudo -u postgres psql -c "ALTER ROLE root  WITH PASSWORD  'root';"
+                                         |                      |
+                                      username               password
+

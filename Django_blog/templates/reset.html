@@ -1,0 +1,27 @@
+{% extends 'base1.html' %}
+
+{% block  title %}Edit_Profile{% endblock  %}
+
+
+{% load rest_framework %}
+
+
+{% block body %}
+
+<h1>Edit_Profile  ...</h1><br>
+<div class="breadcrumb mb-0">    
+    <ol class="breadcrumb_1 d-flex">
+        <ul  class="breadcrumb-item"><a href="/">Home</a> </ul>
+        <ul class="breadcrumb-item active"> Edit_Profile </ul>
+    </ol>
+</div>
+<br><br><br>
+<div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% render_form serializer %}
+        <button type='submit' class="btn btn-primary">Update</button>
+
+    </form>
+</div>
+{% endblock %}

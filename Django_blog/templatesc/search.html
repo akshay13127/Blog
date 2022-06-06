@@ -1,0 +1,28 @@
+{% extends 'base1.html' %} 
+{% load static %} {% block title %}Blogs Page {% endblock title %} 
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{% block body %}
+{% for message in messages%}
+<div id="my" {% if message.tags %}
+    class="alert {% if message.tags != "error" %} alert-{{ message.tags }} {% else %} alert-danger {% endif %}{% endif %} alert-dismissible fade show msg5 text-center"
+    role="alert" style="margin-top:65px; margin-bottom:0px;">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+<h3>Search Results for <span class="text-info">"{{request.GET.keyword}}"</span></h3>
+
+
+{% for i in results %}
+
+
+<h2>{{i.title}}</h2>
+
+{% endfor %}
+
+
+{% endblock %}
